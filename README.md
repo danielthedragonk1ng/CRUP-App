@@ -1,61 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CRUD-App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Repository ini adalah aplikasi CRUD sederhana berbasis Laravel yang dikembangkan untuk lingkungan development lokal (Windows + XAMPP). README ini menjelaskan langkah-langkah setup agar aplikasi bisa dijalankan di mesin pengembang.
 
-## About Laravel
+## Prasyarat
+- PHP 8.x terinstal (disarankan lewat XAMPP)
+- Composer
+- Node.js + npm
+- SQLite (file database sudah disertakan di `database/database.sqlite`)
+- Git (opsional)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Catatan: Instruksi di bawah disusun untuk PowerShell di Windows.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Langkah-langkah setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone repository (jika belum):
 
-## Learning Laravel
+   git clone <repo-url> .
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Install dependensi PHP dengan Composer:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Install dependensi frontend:
 
-## Laravel Sponsors
+   npm install
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Copy file environment dan generate APP_KEY:
 
-### Premium Partners
+   cp .env.example .env ; php artisan key:generate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+   Jika Anda menggunakan PowerShell dan `cp` tidak tersedia, gunakan:
 
-## Contributing
+   Copy-Item .env.example .env ; php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Database (SQLite)
 
-## Code of Conduct
+   - File SQLite contoh sudah ada di `database/database.sqlite`. Jika tidak ada, buat file kosong:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+     New-Item -Path .\database\database.sqlite -ItemType File
 
-## Security Vulnerabilities
+   - Pastikan di file `.env` pengaturan database mengarah ke SQLite:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+     DB_CONNECTION=sqlite
+     DB_DATABASE=${PWD}\database\database.sqlite
 
-## License
+   - Jalankan migrasi dan seeders:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+     php artisan migrate --seed
+
+     Jika ada perubahan migration tambahan, jalankan:
+
+     php artisan migrate
+
+6. Build assets (development):
+
+   npm run dev
+
+   Untuk production build:
+
+   npm run build
+
+7. Menjalankan aplikasi
+
+   - Opsi A (php artisan serve):
+
+     php artisan serve
+
+     Akses: http://127.0.0.1:8000
+
+   - Opsi B (XAMPP):
+
+     - Tempatkan project di folder `htdocs` (sudah pada `c:\xampp\htdocs\crud-app`).
+     - Pastikan Apache berjalan.
+     - Akses lewat http://localhost/crud-app/public (atau atur VirtualHost untuk root project).
+
+## Troubleshooting cepat
+
+- Jika muncul error Missing app key: jalankan `php artisan key:generate`.
+- Jika view 500/parse error: cek `routes/web.php` untuk error sintaks.
+- Jika migration tidak menambahkan kolom yang diharapkan: periksa file `database/database.sqlite` yang aktif, dan jalankan `php artisan migrate:status`.
+- Cek log aplikasi di `storage/logs/laravel.log` untuk detail error runtime.
+
+## Perintah berguna
+
+- Lihat routes: `php artisan route:list`
+- Clear cache config: `php artisan config:clear`
+- Clear view cache: `php artisan view:clear`
+- Jalankan tinker: `php artisan tinker`
+
+## Catatan singkat proyek
+
+- Model `Dosen` menggunakan field `nama` dan `email`.
+- Model `MataKuliah` menggunakan field `nama`, `sks`, dan `dosen_id`.
+
+Jika Anda menemukan MassAssignmentException saat menyimpan model, periksa properti `$fillable` pada model terkait (mis. `app/Models/MataKuliah.php`).
+
+---
+
+README ini sekarang hanya berisi instruksi setup singkat untuk project — bagian dokumentasi/branding Laravel standar telah dihapus agar lebih ringkas dan fokus pada langkah menjalankan aplikasi.
