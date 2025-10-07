@@ -8,11 +8,10 @@ class MataKuliahFactory extends Factory
 {
     public function definition(): array
     {
-        return[
-            'nama'= ucfirst($this->faker->unique()->words(2, true)), // contoh: "Pengembangan Web"
-            'sks'=> $this->faker->numberBetween(2, 4),
-// PENTING: jangan set 'dosen_id' supaya tidak membuatdosen baru otomatis
-        ]
+        return [
+            'nama' => ucfirst($this->faker->unique()->words(2, true)), // contoh: "Pengembangan Web"
+            'sks' => $this->faker->numberBetween(2, 4),
+            // PENTING: jangan set 'dosen_id' supaya tidak membuat dosen baru otomatis
+        ];
     }
-
 }
