@@ -15,9 +15,10 @@ Schema::create('mata_kuliahs', function (Blueprint $table) {
     $table->id();
     $table->string('nama');
     $table->integer('sks');
-    $table->foreignId('dosen_id')->constrained('dosens');
+    $table->foreignId('dosen_id')->constrained('dosens')->onDelete('cascade');
     $table->timestamps();
 });
+
 
     }
 

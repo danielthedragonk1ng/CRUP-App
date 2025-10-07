@@ -17,7 +17,9 @@ class DosenFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+//Penting: jangan set '
         ];
     }
 }

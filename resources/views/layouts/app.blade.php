@@ -1,10 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CRUD App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Latar belakang keseluruhan halaman */
+        body {
+            background-color: #e6f7ff; /* biru muda */
+        }
+        /* Judul default (tanpa latar kuning) */
+        .page-title {
+            color: #0b0b0b;
+            padding: 10px 16px;
+            display: inline-block;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            background: transparent; /* tidak kuning */
+        }
+        /* Judul yang diberi highlight kuning */
+        .title-highlight {
+            background-color: #ffeb3b; /* kuning */
+            color: #0b0b0b;
+            padding: 10px 16px;
+            display: inline-block;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        /* Container tambahan agar konten tidak menempel ke tepi */
+        .content-wrap {
+            padding: 24px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,11 +53,11 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <div class="content-wrap">
         @yield('content')
-    </main>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- tempat untuk memasukkan script per-view (Chart.js dll) -->
     @yield('scripts')
 </body>
 </html>

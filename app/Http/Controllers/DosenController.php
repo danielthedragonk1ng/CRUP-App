@@ -39,11 +39,16 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => 'required|string|max:100',
+            'nama'  => 'required|string|max:255',
             'email' => 'required|email|unique:dosens,email',
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email'    => 'Masukan email yang benar.',
+            'email.unique'   => 'Email sudah terdaftar.',
         ]);
 
         Dosen::create($data);
+
         return redirect()->route('dosens.index')->with('success', 'Dosen berhasil ditambahkan.');
     }
 
@@ -64,11 +69,17 @@ class DosenController extends Controller
     public function update(Request $request, Dosen $dosen)
     {
         $data = $request->validate([
-            'nama' => 'required|string|max:100',
+            'nama'  => 'required|string|max:255',
             'email' => 'required|email|unique:dosens,email,' . $dosen->id,
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email'    => 'Masukan email yang benar.',
+            'email.unique'   => 'Email sudah terdaftar.',
         ]);
+
         $dosen->update($data);
-        return redirect()->route('dosens.index')->with('success', 'Dosen berhasil diubah.');
+
+        return redirect()->route('dosens.index')->with('success', 'Dosen berhasil diupdate.');
     }
 
     /**

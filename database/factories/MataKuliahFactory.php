@@ -4,20 +4,15 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MataKuliah>
- */
 class MataKuliahFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        return [
-            //
-        ];
+        return[
+            'nama'= ucfirst($this->faker->unique()->words(2, true)), // contoh: "Pengembangan Web"
+            'sks'=> $this->faker->numberBetween(2, 4),
+// PENTING: jangan set 'dosen_id' supaya tidak membuatdosen baru otomatis
+        ]
     }
+
 }
